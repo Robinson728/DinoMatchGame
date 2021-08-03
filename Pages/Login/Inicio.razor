@@ -1,0 +1,48 @@
+﻿@page "/inicio"
+
+@inject NavigationManager Nav
+@inject IJSRuntime Confirmacion
+
+<div class=" container">
+        <div class=" text-center">
+
+            <p style="font-family: Times New Roman">
+                ⚠️Bienvenido a DinoGame, es hora de divertirse con nuestros diferentes modos de juego🎉
+            </p>
+                Antes de Iniciar, te invitamos a <a href="/" class="ml-2" @onclick="Login">Loguearte </a> o <a href="/RUsuarios" class="ml-2" @onclick="Registrar"> Registrarte</a>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@code {
+
+
+    private void Login()
+        {
+            Nav.NavigateTo($"/RUsuarios");
+        }
+        private void Registrar()
+        {
+            Nav.NavigateTo($"/RUsuarios");
+        }
+
+}

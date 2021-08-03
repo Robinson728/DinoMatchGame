@@ -1,0 +1,111 @@
+﻿@page "/RUsuarios"
+
+<EditForm Model="user" OnValidSubmit="Guardar">
+
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header">
+            <h1>Registro de usuarios</h1>
+        </div>
+        <div class="card-body">
+            <form />
+            <div class="form-row align-items-center">
+                <div class="col">
+                    <div class="form-group">
+                        <label>PersonaId</label>
+                        <div class="input-group">
+                            <InputNumber @bind-Value="user.UsuarioId" class="form-control col-4"/>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" @onclick="Buscar">
+                                    <span class="oi oi-magnifying-glass"></span> Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label>Nombre completo</label>
+                <InputText @bind-Value="user.NombreCompleto" class="form-control" />
+                <ValidationMessage For="@(() => user.NombreCompleto)" />
+            </div>
+
+
+            <div class="form-group">
+                <label>Nombre de Usuario</label>
+                <InputText @bind-Value="user.NombreDeUsuario" class="form-control" />
+                <ValidationMessage For="@(() => user.NombreDeUsuario)" />
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
+                    <span class="oi oi-file mr-2"></span> Nuevo
+                </button>
+                <button type="submit" class="btn btn-lg btn-success">
+                    <span class="oi oi-account-login" style="transform:rotate(90deg)"></span> Guardar
+                </button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
+                    <span class="oi oi-trash mr-2"></span>   Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+
+    [Parameter]
+    public int UsuarioId { get; set; }
+
+    private Usuarios user = new Usuarios();
+
+
+    protected override void OnInitialized()
+    {
+        Nuevo();
+        Buscar();
+    }
+
+    public void Nuevo()
+    {
+        user = new Usuarios();
+    }
+
+
+    private void Buscar()
+    {
+        if (user.UsuarioId > 0)
+        {
+            var encontrado = UsuariosBLL.Buscar(user.UsuarioId);
+
+            if (encontrado != null)
+                this.user = encontrado;
+            
+        }
+    }
+
+    public void Guardar()
+    {
+        bool guardo;
+
+        guardo = UsuariosBLL.Guardar(user);
+
+    }
+
+    public void Eliminar()
+    {
+        bool elimino;
+
+        elimino = UsuariosBLL.Eliminar(user.UsuarioId);
+
+    }
+
+
+
+}

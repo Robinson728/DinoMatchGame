@@ -1,0 +1,18 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar" style="background: linear-gradient(to bottom, #6600cc 0%, #9933ff 100%); ">
+        <NavMenu />
+    </div>
+
+    <div class="main" style="background-image: url('./Images/Dino1.jpeg'); width: inherit; background-repeat: no-repeat; background-size: cover; ">
+        <div class="top-row px-4 auth">
+            <LoginDisplay />
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+</div>

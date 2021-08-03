@@ -1,0 +1,135 @@
+﻿<div class="table pl-0 navbar navbar-dark"style="background: linear-gradient(to bottom, #6600cc 0%, #9933ff 100%);">
+    <a class="navbar-brand" href=""><img width="70" src="./Images/Dino6.png" /> Dino Matching Game</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="Funcion1">
+                <span class="oi oi-menu" aria-hidden="true"></span> Menu principal
+            </NavLink>
+
+            @if (MenuPrincipal)
+            {
+                <ul class="nav flex-column">
+
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="EntrenamientoA">
+                            <span class="oi oi-media-play" aria-hidden="true"></span> Entrenamiento
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="/">
+                            <span class="oi oi-clipboard" aria-hidden="true"></span> Clasificaci&oacute;n
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="" @onclick="() => MenuPrincipal = !MenuPrincipal">
+                            <span class="oi oi-account-logout" aria-hidden="true"></span> Cerrar Sesi&oacute;n
+                        </NavLink>
+                    </li>
+                </ul>
+
+            }
+        </li>
+
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="Funcion2">
+                <span class="oi oi-caret-bottom" aria-hidden="true"></span> Dificultad
+            </NavLink>
+
+            @if (Dificultad)
+            {
+                <ul class="nav flex-column">
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="FacilR">
+                            <span class="oi oi-play-circle" aria-hidden="true"></span> Facil
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="Normal">
+                            <span class="oi oi-play-circle" aria-hidden="true"></span> Normal
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="Dificil">
+                            <span class="oi oi-play-circle" aria-hidden="true"></span> Dificil
+                        </NavLink>
+                    </li>
+                </ul>
+
+            }
+        </li>
+
+        <li class=" nav-item px-3">
+            <NavLink class="nav-link" @onclick="Funcion3">
+                <span class="oi oi-caret-bottom" aria-hidden="true"></span>Contra Reloj
+            </NavLink>
+
+            @if (ContraTime)
+            {
+                <ul class=" nav flex-column">
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="Facil">
+                            <span class="oi oi-play-circle" aria-hidden="true"></span> Facil
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="NormalR">
+                            <span class="oi oi-play-circle" aria-hidden="true"></span> Normla
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="/">
+                            <span class="oi oi-play-circle" aria-hidden="true"></span> Dificil
+                        </NavLink>
+                    </li>
+                </ul>
+            }
+        </li>
+
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    private bool MenuPrincipal;
+    private bool Dificultad;
+    private bool ContraTime;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void Funcion1()
+    {
+        MenuPrincipal = !MenuPrincipal;
+        ContraTime = false;
+        Dificultad = false;
+    }
+    private void Funcion2()
+    {
+        Dificultad = !Dificultad;
+        ContraTime = false;
+        MenuPrincipal = false;
+    }
+    private void Funcion3()
+    {
+        ContraTime = !ContraTime;
+        MenuPrincipal = false;
+        Dificultad = false;
+    }
+}

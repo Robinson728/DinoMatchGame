@@ -1,0 +1,164 @@
+﻿
+@page "/FacilR"
+@using System.Timers
+
+<style>
+    .container {
+        margin-left: 80px;
+        width: 400px;
+        float: left;
+    }
+
+    jonathan {
+        float: right;
+        width: 50px;
+        height: 50px;
+    }
+
+    button {
+        width: 100px;
+        height: 100px;
+        font-size: 40px;
+    }
+
+    #miBoton:focus {
+        background: #7952B3;
+    }
+
+</style>
+
+<div class="container">
+    <div class="row">
+        @for (var NumeroAnimales = 0; NumeroAnimales < AnimalesMesclado.Count; NumeroAnimales++)
+        {
+            var animal = AnimalesMesclado[NumeroAnimales];
+            var uniqueDescription = $"Button #{NumeroAnimales}";
+            <div class="col-3">
+                <button id=miBoton @onclick="@(() => ButtonClick(animal, uniqueDescription))"
+                        type="button" class="js-click btn btn-outline-dark">
+                    <h1>@animal</h1>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="jonathan mt-5">
+
+    <div class="container bg-transparent" style="height:330px">
+        <div class="border border-dark">
+            <div class="text-center">
+                <h3 class="text-light">CUDRO DE PUNTAGE</h3>
+            </div>
+        </div>
+
+        <div class="border border-dark">
+            <h3 class="text-light">Pares: @ParesEncontrados</h3>
+            <h4 class="text-light">Tiempo: @TiempoPantalla</h4>
+        </div>
+
+    </div>
+</div>
+
+@code {
+
+    List<string> animalEmoji = new List<string>()
+{
+    "🐶","🐶",
+    "🐺","🐺",
+    "🐮","🐮",
+    "🦊","🦊",
+    "🐱","🐱",
+    "🦁","🦁",
+    "🐯","🐯",
+    "🐹","🐹",
+    };
+
+    List<string> AnimalesMesclado = new List<string>();
+    int ParesEncontrados = 0;
+    Timer timer;
+    int tenthsOfSecondsElapsed = 0;
+    string TiempoPantalla;
+    string UltimoAnimalEncontrado = string.Empty;
+    string UltimaDescripcion = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer(100);
+        timer.Elapsed += Timer_Tick;
+
+        SetUpGame();
+    }
+
+    private void SetUpGame()
+    {
+        Random random = new Random();
+        AnimalesMesclado = animalEmoji
+            .OrderBy(item => random.Next())
+            .ToList();
+        ParesEncontrados = 0;
+        tenthsOfSecondsElapsed = 0;
+    }
+
+    private void Reiniciar()
+    {
+        Random random = new Random();
+        AnimalesMesclado = animalEmoji
+            .OrderBy(item => random.Next())
+            .ToList();
+        tenthsOfSecondsElapsed = 0;
+    }
+
+    private void ButtonClick(string animal, string animalDescription)
+    {
+        if (UltimoAnimalEncontrado == string.Empty)
+        {
+            // First selection of the pair. Remember it.
+            UltimoAnimalEncontrado = animal;
+            UltimaDescripcion = animalDescription;
+            if (ParesEncontrados == 8)
+            {
+                ParesEncontrados = 0;
+            }
+
+            timer.Start();
+
+        }
+        else if ((UltimoAnimalEncontrado == animal) && (animalDescription != UltimaDescripcion))
+        {
+            // Match found! Reset for next pair.
+            UltimoAnimalEncontrado = string.Empty;
+
+            // Replace found animals with empty string to hide them.
+            AnimalesMesclado = AnimalesMesclado
+                .Select(a => a.Replace(animal, string.Empty))
+                .ToList();
+
+            ParesEncontrados++;
+            if (ParesEncontrados == 8)
+            {
+                timer.Stop();
+                TiempoPantalla += " ¿Jugar de nuevo?";
+
+                Reiniciar();
+            }
+        }
+        else
+        {
+            // User selected a pair that don't match.
+            // Reset selection.
+            UltimoAnimalEncontrado = string.Empty;
+        }
+    }
+
+    private void Timer_Tick(Object source, ElapsedEventArgs e)
+    {
+        InvokeAsync(() =>
+        {
+            tenthsOfSecondsElapsed++;
+            TiempoPantalla = (tenthsOfSecondsElapsed / 10F)
+                .ToString("0.0s");
+            StateHasChanged();
+        });
+    }
+}

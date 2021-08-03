@@ -1,0 +1,51 @@
+﻿@page "/MenuPrincipal"
+
+@inject NavigationManager Nav
+
+<div class="container" style="width:400px">
+    <div class="card bg-light " style="height:400px">
+        <div class="card-header">
+            <div class="text-center">
+                <h1>Menu</h1>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="d-flex justify-content-center mt-3">
+                <button type="button" style="height: 50px; width: 300px;">
+                    Entrenamiento
+                </button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="d-flex justify-content-center mt-3">
+                <button type="button" style="height: 50px; width: 300px;" @onclick="Dificultades">
+                    Modos de Juego
+                </button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="d-flex justify-content-center mt-3">
+                <button type="button" style="height: 50px; width: 300px;">
+                    Clasificaci&oacute;n
+                </button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="d-flex justify-content-end mt-3 col-12">
+                <button type="button" style="height: 35px; width: 150px;">
+                    Cerrar sesi&oacute;n
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    private void Dificultades()
+    {
+        Nav.NavigateTo($"/MDificultades");
+    }
+
+}

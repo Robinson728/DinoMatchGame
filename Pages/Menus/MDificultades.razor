@@ -1,0 +1,71 @@
+﻿@page "/MDificultades"
+
+@inject NavigationManager Nav
+@inject IJSRuntime Confirmacion
+
+<EditForm Model="user">
+
+    <div class="container" style="width:310px">
+        <div class="card bg-light " style="height:330px">
+
+            <div class="card-header">
+                <div class="text-center">
+                    <h3>Seleccionar Dificultad</h3>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="button" class="btn btn-primary btn-lg btn-block" @onclick="Facil">Facil</button>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="button" class="btn btn-primary btn-lg btn-block" @onclick="Normal">Normal</button>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="button" class="btn btn-primary btn-lg btn-block" @onclick="Dificil">Dificil</button>
+                </div>
+            </div>
+            <form>
+
+            </form>
+
+        </div>
+    </div>
+
+
+</EditForm>
+
+@code {
+
+    Usuarios user = new Usuarios();
+
+    public void Nuevo()
+    {
+        user = new Usuarios();
+
+    }
+    private void F_Login()
+    {
+
+        if (UsuariosBLL.ExisteUsuario(user.NombreDeUsuario))
+        {
+            Nav.NavigateTo($"/Bienvenida");
+        }
+        else
+        {
+            Nuevo();
+        }
+    }
+
+    private void Facil()
+    {
+        Nav.NavigateTo($"/");
+    }
+    private void Normal()
+    {
+        Nav.NavigateTo($"/Normal");
+    }
+    private void Dificil()
+    {
+        Nav.NavigateTo($"/Dificil");
+    }
+}
