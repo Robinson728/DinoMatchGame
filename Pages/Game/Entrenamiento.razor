@@ -18,6 +18,10 @@
         height: 100px;
         font-size: 50px;
     }
+
+    #miboton:focus {
+        background-color: #7952B3
+    }
 </style>
 
 <div class="container mt-4">
@@ -27,7 +31,7 @@
             var animal = AnimalesMesclado[NumeroAnimales];
             var uniqueDescription = $"Button #{NumeroAnimales}";
             <div class="col-3">
-                <button @onclick="@(() => ButtonClick(animal, uniqueDescription))"
+                <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
                         type="button" class="btn btn-outline-dark">
                     <h1>@animal</h1>
                 </button>
