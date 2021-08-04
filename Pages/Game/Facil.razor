@@ -56,7 +56,7 @@
 
 @code {
 
-    List<string> animalEmoji = new List<string>()
+        List<string> animalEmoji = new List<string>()
 {
     "🐶","🐶",
     "🐺","🐺",
@@ -68,13 +68,13 @@
     "🐹","🐹",
     };
 
-    List<string> AnimalesMesclado = new List<string>();
-    int ParesEncontrados = 0;
-    Timer timer;
-    int tenthsOfSecondsElapsed = 80;
-    string TiempoPantalla;
-    string UltimoAnimalEncontrado = string.Empty;
-    string UltimaDescripcion = string.Empty;
+        List<string> AnimalesMesclado = new List<string>();
+        int ParesEncontrados = 0;
+        Timer timer;
+        int tenthsOfSecondsElapsed = 80;
+        string TiempoPantalla;
+        string UltimoAnimalEncontrado = string.Empty;
+        string UltimaDescripcion = string.Empty;
 
     protected override void OnInitialized()
     {
@@ -132,34 +132,27 @@
             if (ParesEncontrados == 8)
             {
                 timer.Stop();
-                TiempoPantalla += " ¿Jugar de nuevo?";
+                TiempoPantalla += " ¿Nueva Partida?";
 
                 Reiniciar();
             }
-        }
-        else
-        {
-            // User selected a pair that don't match.
-            // Reset selection.
-            UltimoAnimalEncontrado = string.Empty;
-        }
-    }
-
-    private void Timer_Tick(Object source, ElapsedEventArgs e)
-    {
-        InvokeAsync(() =>
-        {
-            tenthsOfSecondsElapsed--;
-            if (tenthsOfSecondsElapsed <= 0)
+            }
+            else
             {
-                timer.Stop();
-                TiempoPantalla += " ¿Jugar de nuevo?";
-
-                Reiniciar();
+                // User selected a pair that don't match.
+                // Reset selection.
+                UltimoAnimalEncontrado = string.Empty;
             }
-            TiempoPantalla = (tenthsOfSecondsElapsed / 10F)
-                .ToString("0.0s");
-            StateHasChanged();
-        });
+        }
+
+        private void Timer_Tick(Object source, ElapsedEventArgs e)
+        {
+            InvokeAsync(() =>
+            {
+                tenthsOfSecondsElapsed++;
+                TiempoPantalla = (tenthsOfSecondsElapsed / 10F)
+                    .ToString("0.0s");
+                StateHasChanged();
+            });
+        }
     }
-}
