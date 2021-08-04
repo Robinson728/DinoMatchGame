@@ -167,12 +167,12 @@ namespace DinoMatchGame.BLL
 
         public static List<Usuarios> GetList(Expression<Func<Usuarios, bool>> criterio)
         {
-            List<Usuarios> Lista = new List<Usuarios>();
+            List<Usuarios> lista = new List<Usuarios>();
             Contexto contexto = new Contexto();
 
             try
             {
-                Lista = contexto.usuarios.Where(criterio).ToList();
+                lista = contexto.usuarios.Where(criterio).ToList();
             }
             catch (Exception)
             {
@@ -182,7 +182,7 @@ namespace DinoMatchGame.BLL
             {
                 contexto.Dispose();
             }
-            return Lista;
+            return lista;
         }
         
 

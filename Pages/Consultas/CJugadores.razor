@@ -1,5 +1,119 @@
-﻿<h3>CJugadores</h3>
+﻿@page "/Player"
 
-@code {
+<div class="card accordion">
+    <div class="card-header" style="background-color: #90C2E7;">
+        <h1 style="color:black; text-align: center; font-family: 'Times New Roman'; font-style: italic;">Consulta de Jugadores</h1>
+    </div>
 
+    <div class="card-body">
+        <div class="row">
+            <div class="col form-group">
+                <label>Filtrar por:</label>
+                <select @bind="indice" class="custom-select">
+                    <option value="-1" disabled>Seleccionar opción</option>
+                    <option value="0">Todo</option>
+                    <option value="1">Jugador Id</option>
+                    <option value="2">Nombre de usuario</option>
+                </select>
+            </div>
+
+            <div class="col form-group">
+                <label>Criterio:</label>
+                <div class="input-group">
+                    <input class="form-control" type="@(indice == 1 ? "number" : "text")" @bind-value="Criterio" placeholder="Ingrese el criterio a filtrar para obtener el jugador deseado" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" @onclick="Buscar">
+                            <i class="oi oi-magnifying-glass" />
+                            Filtrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @if (ListaJugadores == null)
+        {
+<div class="form-group">
+    <h2>No existen jugadores en la base de datos</h2>
+</div> }
+            else
+            {
+<div class="form-group">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Jugador Id</th>
+                <th>Nombre de usuario</th>
+                <th>Mejor Puntuacion</th>
+                <th>Veces jugado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cont in ListaJugadores)
+            {
+<tr>
+    <td>@cont.UsuarioId</td>
+    <td>@cont.NombreDeUsuario</td>
+    <td>@cont.MejorPuntuación</td>
+    <td>@cont.VecesJugado</td>
+    <td>
+        <button class="btn  btn-danger" @onclick="() => Eliminar(cont.UsuarioId)">
+            <i class="oi oi-trash" aria-hidden="true"></i>
+        </button>
+    </td>
+</tr>}
+        </tbody>
+    </table>
+
+</div>}
+    </div>
+</div>
+
+@code { 
+    public int indice = -1;
+    public string Criterio = string.Empty;
+    List<Usuarios> ListaJugadores = new List<Usuarios>();
+
+    protected override void OnInitialized()
+    {
+        Actualizar();
+    }
+    public void Actualizar()
+    {
+        ListaJugadores = UsuariosBLL.GetList(e => true);
+    }
+
+    void Buscar()
+    {
+        if (indice == 0)
+        {
+            ListaJugadores = UsuariosBLL.GetList(p => true).ToList();
+        }
+        else if (indice == 1)
+        {
+            int IdJugadores = int.Parse(Criterio);
+            ListaJugadores = UsuariosBLL.GetList(p => p.UsuarioId == IdJugadores).ToList();
+
+        }
+        else if (indice == 2)
+        {
+            ListaJugadores = UsuariosBLL.GetList(p => p.NombreDeUsuario.Contains(Criterio)).ToList();
+        }
+
+    }
+
+    private void Eliminar(int id)
+    {
+        bool Paso;
+
+
+        Paso = UsuariosBLL.Eliminar(id);
+
+        if (Paso)
+        {
+            Actualizar();
+        }
+        return;
+    } 
 }
