@@ -1,31 +1,32 @@
 ﻿@page "/Player"
-@*<div class="card accordion">
+<div class="card accordion">
         <div class="card-header" style="background-color: #90C2E7;">
-            <h1 style="color:black; text-align: center; font-family: 'Times New Roman'; font-style: italic;">Consulta de Jugadores</h1>
+            <h1 style="color:black; text-align: center; font-family: 'Times New Roman'; font-style: italic;">Mejores Tiempos</h1>
         </div>
 
         <div class="card-body">
             <div class="row">
                 <div class="col form-group">
-                    <label>Filtrar por:</label>
-                    <select @bind="indice" class="custom-select">
-                        <option value="-1" disabled>Seleccionar opción</option>
-                        <option value="0">Todo</option>
-                        <option value="1">Jugador Id</option>
-                        <option value="2">Nombre de usuario</option>
+                    <select class="form-control ml-3 w-1" @bind-value="IndexConsulta" @bind-value:event="oninput">
+                        <option value="-1" disabled>Filtrar por...</option>
+                        <option value="0">Todos</option>
+                        <option value="1">Jugador</option>
+                        <option value="2">Dificultad</option>
+                        <option value="3">Modo de Juego</option>
                     </select>
                 </div>
 
                 <div class="col form-group">
-                    <label>Criterio:</label>
                     <div class="input-group">
-                        <input class="form-control" type="@(indice == 1 ? "number" : "text")" @bind-value="Criterio" placeholder="Ingrese el criterio a filtrar para obtener el jugador deseado" />
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" @onclick="Buscar">
-                                <i class="oi oi-magnifying-glass" />
-                                Filtrar
-                            </button>
-                        </div>
+                        <input class="form-control" @bind-value="CriterioTextBox" @bind-value:event="oninput" placeholder="Criterio" />
+                        @if (CriterioTextBox != null)
+                        {
+                            CargarConsulta();
+                            if (IndexConsulta != -1)
+                            {
+                                CriterioTextBox = string.Empty;
+                            }
+                        }
                     </div>
                 </div>
 
@@ -42,105 +43,39 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Jugador Id</th>
-                    <th>Nombre de usuario</th>
-                    <th>Mejor Puntuacion</th>
-                    <th>Veces jugado</th>
+                    <th>#</th>
+                    <th>Jugador</th>
+                    <th>Tiempo</th>
+                    <th>Dificultad</th>
+                    <th>Modo de Juego</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var cont in ListaJugadores)
+                @foreach (Models.MatchDino item in jugadas)
                 {
-    <tr>
-        <td>@cont.UsuarioId</td>
-        <td>@cont.NombreDeUsuario</td>
-        <td>@cont.MejorPuntuación</td>
-        <td>@cont.VecesJugado</td>
-        <td>
-            <button class="btn  btn-danger" @onclick="() => Eliminar(cont.UsuarioId)">
-                <i class="oi oi-trash" aria-hidden="true"></i>
-            </button>
-        </td>
-    </tr>}
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.Jugador</td>
+                        <td>@item.TiempoJugada</td>
+                        <td>@item.Dificultad</td>
+                        <td>@item.ModoDeJuego</td>
+                    </tr>
+                }
             </tbody>
         </table>
 
     </div>}
         </div>
-    </div>*@
-
-@*——————————————————————————————————————————————[ LISTA DE JUGADORES ]——————————————————————————————————————————————*@
-<div class="card col-6 blur bg-black" style="max-height: 700px">
-    <div class="card-header">
-        <center><h3><b>TOP MEJORES TIEMPOS</b></h3></center>
-        <br />
-        @*——————————————————————————————————————————————[ SELECT ]——————————————————————————————————————————————*@
-        <div class="input-group">
-            <select class="form-control ml-3 w-1" @bind-value="IndexConsulta" @bind-value:event="oninput">
-                <option value="-1" disabled>Filtrar por...</option>
-                <option value="0">Todos</option>
-                <option value="1">Jugador</option>
-                <option value="2">Dificultad</option>
-                <option value="3">Estilo</option>
-            </select>
-            @*——————————————————————————————————————————————[ CRITERIO ]——————————————————————————————————————————————*@
-            <input class="form-control ml-3" @bind-value="CriterioTextBox" @bind-value:event="oninput" placeholder="Criterio a filtrar" />
-            @*——————————————————————————————————————————————[ BOTON FILTRAR ]——————————————————————————————————————————————*@
-            @*——————[ InputChanged ]——————*@
-            @if (CriterioTextBox != null)
-            {
-                CargarConsulta();
-                if (IndexConsulta != -1)
-                {
-                    CriterioTextBox = string.Empty;
-                }
-            }
-            @*<button @onclick="@(() => ConsultaButtonClick())" class="btn btn-primary h-25 ml-4"><i class="oi oi-magnifying-glass" /></button>*@
-        </div>
     </div>
 
-    <div class="card-body bg-transparent">
-        <div class="table-wrapper">
-            @*——————————————————————————————————————————————[ TITULOS DE LA TABLA ]——————————————————————————————————————————————*@
-            <table style="background-color: transparent; " class="table table-hover">
-                <thead style="background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);">
-                    <tr>
-                        <th>#</th>
-                        <th>Jugador</th>
-                        <th>Tiempo</th>
-                        <th>Estilo</th>
-                        <th>Dificultad</th>
-                    </tr>
-                </thead>
-
-                @*——————————————————————————————————————————————[ DATOS DE LA TABLA ]——————————————————————————————————————————————*@
-                <tbody>
-                    @{
-                        int i = 0;
-                    }
-
-                    @foreach (Models.MatchDino item in jugadas)
-                    {
-                        i++;
-                        <tr>
-                            <td>@i</td>
-                            <td>@item.Jugador</td>
-                            <td>@item.ModoDeJuego</td>
-                            <td>@item.TiempoJugada</td>
-                            <td>@item.Dificultad</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 @code {
     public int indice = -1;
     public string Criterio = string.Empty;
     List<Usuarios> ListaJugadores = new List<Usuarios>();
-    string CriterioTextBox = "";
+    string CriterioTextBox = string.Empty;
+    int i = 0;
 
     private List<MatchDino> jugadas = new List<MatchDino>();
 
