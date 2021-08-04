@@ -1,6 +1,7 @@
 ﻿
 @page "/FacilR"
 @using System.Timers
+@inject IToastService toast 
 
 <style>
     .container {
@@ -93,6 +94,7 @@
 
     MatchDino jugada = new MatchDino();
     public string Jugador = string.Empty;
+    string time;
 
 
     protected override void OnInitialized()
@@ -152,7 +154,9 @@
             if (ParesEncontrados == 8)
             {
                 timer.Stop();
+                time = TiempoPantalla;
                 TiempoPantalla += " ¿Nueva Partida?";
+                RegistrarJugada();
 
                 Reiniciar();
             }
@@ -196,18 +200,17 @@
         jugada.Jugador = Jugador;
         jugada.ModoDeJuego = "Contra Reloj";
         jugada.Dificultad = "Fácil";
-        jugada.TiempoJugada = Convert.ToSingle(this.TiempoPantalla.Replace("s", ""));
+        jugada.TiempoJugada = 8 - Convert.ToDouble(this.time.Replace("s", ""));
 
-        //paso = MatchDinoBLL.Guardar(jugada);
+        paso = MatchDinoBLL.Guardar(jugada);
 
         if (paso)
         {
-            @*Condicion 1: no se debe mostrar nada si guardo correctamente*@
+            toast.ShowSuccess("Listo");
         }
         else
         {
-            @*Condicion 2: en caso de error se debe mostrar que ocurrio un error*@
+            toast.ShowError("Error");
         }
     }
-
 }

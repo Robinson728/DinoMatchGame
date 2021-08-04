@@ -30,7 +30,7 @@ namespace DinoMatchGame.Migrations
                     b.Property<string>("ModoDeJuego")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("TiempoJugada")
+                    b.Property<double>("TiempoJugada")
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");

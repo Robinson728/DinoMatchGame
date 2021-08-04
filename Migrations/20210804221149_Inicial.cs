@@ -15,7 +15,7 @@ namespace DinoMatchGame.Migrations
                     Jugador = table.Column<string>(type: "TEXT", nullable: true),
                     ModoDeJuego = table.Column<string>(type: "TEXT", nullable: true),
                     Dificultad = table.Column<string>(type: "TEXT", nullable: true),
-                    TiempoJugada = table.Column<float>(type: "REAL", nullable: false)
+                    TiempoJugada = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DinoMatchGame.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210804203747_Inicial")]
+    [Migration("20210804221149_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,7 @@ namespace DinoMatchGame.Migrations
                     b.Property<string>("ModoDeJuego")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("TiempoJugada")
+                    b.Property<double>("TiempoJugada")
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");

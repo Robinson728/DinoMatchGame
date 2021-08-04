@@ -11,6 +11,6 @@ namespace DinoMatchGame.Models
         public string Jugador { get; set; }
         public string ModoDeJuego { get; set; }
         public string Dificultad { get; set; }
-        public float TiempoJugada { get; set; }
+        public double TiempoJugada { get; set; }
     }
 }
