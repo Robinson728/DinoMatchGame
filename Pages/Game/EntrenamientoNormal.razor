@@ -1,0 +1,172 @@
+﻿@page "/NormalEntrenamiento"
+@using System.Timers
+
+<style>
+    .container {
+        margin-left: 40px;
+        width: 450px;
+        float: left;
+    }
+
+    jonathan {
+        margin-right: unset;
+        width: 40px;
+        height: 50px;
+    }
+
+    button {
+        width: 70px;
+        height: 70px;
+        font-size: 50px;
+    }
+
+    #miboton:focus {
+        background: #7952B3
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="row">
+        @for (var animalNumber = 0; animalNumber < AnimalesMesclado.Count; animalNumber++)
+        {
+            var animal = AnimalesMesclado[animalNumber];
+            var uniqueDescription = $"Button #{animalNumber}";
+            <div class="col-2">
+                <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
+                        type="button" class="btn btn-outline-dark">
+                    <h1>@animal</h1>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="jonathan mt-5">
+
+    <div class="container bg-transparent" style="height:400px">
+        <div class="border border-dark">
+            <div class="text-center">
+                <h3 class="text-light">CUADRADO DE PUNTAJE</h3>
+            </div>
+        </div>
+
+        <div class="border border-dark">
+            <h4 class="text-light">Pares: @ParesEncontados</h4>
+            <h4 class="text-light">Tiempo: @TiempoPantalla</h4>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    List<string> animalEmoji = new List<string>()
+{
+        "🐶","🐶",
+        "🐺","🐺",
+        "🐮","🐮",
+        "🦊","🦊",
+        "🐱","🐱",
+        "🦁","🦁",
+        "🐯","🐯",
+        "🐹","🐹",
+        "💣","💣",
+        "👹","👹",
+        "💯","💯",
+        "👾","👾",
+        "👻","👻",
+        "🤖","🤖",
+        "🧙🏽‍♂️","🧙🏽‍♂️",
+        "🧛🏼‍♀️","🧛🏼‍♀️",
+        "👩🏽‍🔬","👩🏽‍🔬",
+        "👩🏽‍🚀","👩🏽‍🚀",
+    };
+
+    List<string> AnimalesMesclado = new List<string>();
+    int ParesEncontados = 0;
+    Timer timer;
+    int tenthsOfSecondsElapsed = 0;
+    string TiempoPantalla;
+    string UltimoAnimalEncontrado = string.Empty;
+    string UltimaDescripcion = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer(100);
+        timer.Elapsed += Timer_Tick;
+
+
+        SetUpGame();
+    }
+
+    private void SetUpGame()
+    {
+        Random random = new Random();
+        AnimalesMesclado = animalEmoji
+            .OrderBy(item => random.Next())
+            .ToList();
+        ParesEncontados = 0;
+        tenthsOfSecondsElapsed = 0;
+    }
+
+    private void Reiniciar()
+    {
+        Random random = new Random();
+        AnimalesMesclado = animalEmoji
+            .OrderBy(item => random.Next())
+            .ToList();
+        tenthsOfSecondsElapsed = 0;
+    }
+
+    private void ButtonClick(string animal, string animalDescription)
+    {
+        if (UltimoAnimalEncontrado == string.Empty)
+        {
+            // First selection of the pair. Remember it.
+            UltimoAnimalEncontrado = animal;
+            UltimaDescripcion = animalDescription;
+            if (ParesEncontados == 18)
+            {
+                ParesEncontados = 0;
+            }
+
+            timer.Start();
+        }
+        else if ((UltimoAnimalEncontrado == animal) && (animalDescription != UltimaDescripcion))
+        {
+            // Match found! Reset for next pair.
+            UltimoAnimalEncontrado = string.Empty;
+
+            // Replace found animals with empty string to hide them.
+            AnimalesMesclado = AnimalesMesclado
+                .Select(a => a.Replace(animal, string.Empty))
+                .ToList();
+
+            ParesEncontados++;
+            if (ParesEncontados == 18)
+            {
+                timer.Stop();
+                TiempoPantalla += " ¿Jugar de nuevo?";
+
+                Reiniciar();
+            }
+        }
+        else
+        {
+            // User selected a pair that don't match.
+            // Reset selection.
+            UltimoAnimalEncontrado = string.Empty;
+        }
+    }
+
+    private void Timer_Tick(Object source, ElapsedEventArgs e)
+    {
+        InvokeAsync(() =>
+        {
+            tenthsOfSecondsElapsed++;
+            TiempoPantalla = (tenthsOfSecondsElapsed / 10F)
+                .ToString("0.0s");
+            StateHasChanged();
+            timer.Start();
+        });
+    }
+} 
