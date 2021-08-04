@@ -25,6 +25,16 @@
     }
 </style>
 
+<AuthorizeView>
+    <Authorized>
+        @if (@context.User.Identity.Name != string.Empty)
+        {
+            RecibirNombreUsuario(Convert.ToString(context.User.Identity.Name));
+        }
+    </Authorized>
+</AuthorizeView>
+
+
 <div class="container mt-4">
     <div class="row">
         @for (var animalNumber = 0; animalNumber < AnimalesMesclado.Count; animalNumber++)
@@ -88,6 +98,10 @@
     string TiempoPantalla;
     string UltimoAnimalEncontrado = string.Empty;
     string UltimaDescripcion = string.Empty;
+
+    MatchDino jugada = new MatchDino();
+    public string Jugador = string.Empty;
+
 
     protected override void OnInitialized()
     {
@@ -179,4 +193,32 @@
             StateHasChanged();
         });
     }
+
+    private void RecibirNombreUsuario(string user)
+    {
+        Jugador = user;
+    }
+
+    private void RegistrarJugada()
+    {
+        bool paso = false;
+
+        jugada.Id = 0;
+        jugada.Jugador = Jugador;
+        jugada.ModoDeJuego = "Contra Reloj";
+        jugada.Dificultad = "Normal";
+        jugada.TiempoJugada = Convert.ToSingle(this.TiempoPantalla.Replace("s", ""));
+
+        //paso = MatchDinoBLL.Guardar(jugada);
+
+        if (paso)
+        {
+            @*Condicion 1: no se debe mostrar nada si guardo correctamente*@
+        }
+        else
+        {
+            @*Condicion 2: en caso de error se debe mostrar que ocurrio un error*@
+        }
+    }
+
 } 

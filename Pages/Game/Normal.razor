@@ -9,7 +9,7 @@
     }
 
     jonathan {
-        margin-right:unset;
+        margin-right: unset;
         width: 40px;
         height: 50px;
     }
@@ -19,10 +19,21 @@
         height: 70px;
         font-size: 50px;
     }
+
     #miboton:focus {
         background: #7952B3
     }
 </style>
+
+<AuthorizeView>
+    <Authorized>
+        @if (@context.User.Identity.Name != string.Empty)
+        {
+            RecibirNombreUsuario(Convert.ToString(context.User.Identity.Name));
+        }
+    </Authorized>
+</AuthorizeView>
+
 
 <div class="container mt-4">
     <div class="row">
@@ -88,6 +99,10 @@
     string UltimoAnimalEncontrado = string.Empty;
     string UltimaDescripcion = string.Empty;
 
+    MatchDino jugada = new MatchDino();
+    public string Jugador = string.Empty;
+
+
     protected override void OnInitialized()
     {
         timer = new Timer(100);
@@ -118,7 +133,7 @@
 
     private void ButtonClick(string animal, string animalDescription)
     {
-        if (UltimoAnimalEncontrado == string.Empty )
+        if (UltimoAnimalEncontrado == string.Empty)
         {
             // First selection of the pair. Remember it.
             UltimoAnimalEncontrado = animal;
@@ -168,4 +183,32 @@
             timer.Start();
         });
     }
+
+    private void RecibirNombreUsuario(string user)
+    {
+        Jugador = user;
+    }
+
+    private void RegistrarJugada()
+    {
+        bool paso = false;
+
+        jugada.Id = 0;
+        jugada.Jugador = Jugador;
+        jugada.ModoDeJuego = "Arcade";
+        jugada.Dificultad = "Normal";
+        jugada.TiempoJugada = Convert.ToSingle(this.TiempoPantalla.Replace("s", ""));
+
+        //paso = MatchDinoBLL.Guardar(jugada);
+
+        if (paso)
+        {
+            @*Condicion 1: no se debe mostrar nada si guardo correctamente*@
+        }
+        else
+        {
+            @*Condicion 2: en caso de error se debe mostrar que ocurrio un error*@
+        }
+    }
+
 } 
