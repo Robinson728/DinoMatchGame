@@ -12,7 +12,7 @@
         height: 50px;
     }
 
-    button {
+    #miboton {
         width: 70px;
         height: 70px;
         font-size: 50px;
@@ -22,6 +22,17 @@
         background: #7952B3
     }
 </style>
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" @onclick="ToggleNavMenu" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false" style="background: #7952B3">
+        Seleccionar Modo
+    </button>
+    <div class="dropdown-menu @NavMenuCssClass" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="EntrenamientoA">Facil</a>
+        <a class="dropdown-item" href="NormalEntrenamiento">Normal</a>
+        <a class="dropdown-item" href="DificilEntrenamiento">Dificil</a>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
@@ -197,5 +208,14 @@
                 .ToString("0.0s");
             StateHasChanged();
         });
+    }
+
+    private bool collapseNavMenu = false;
+
+    private string NavMenuCssClass => collapseNavMenu ? "show" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
     }
 } 
