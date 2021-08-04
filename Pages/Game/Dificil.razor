@@ -174,7 +174,7 @@
             if (ParesEncontrados == 48)
             {
                 timer.Stop();
-                TiempoPantalla += " ¿Nueva Partida?";
+                TiempoPantalla += " ¿Jugar de nuevo?";
 
                 Reiniciar();
             }
@@ -185,6 +185,8 @@
             // Reset selection.
             UltimoAnimalEncontrado = string.Empty;
         }
+
+         
     }
 
     private void Timer_Tick(Object source, ElapsedEventArgs e)
