@@ -204,13 +204,9 @@
 
         paso = MatchDinoBLL.Guardar(jugada);
 
-        if (paso)
+        if (!paso)
         {
-            toast.ShowSuccess("Listo");
-        }
-        else
-        {
-            toast.ShowError("Error");
+            toast.ShowSuccess("Ha ocurrido un error al guardar los datos.");
         }
     }
 }
