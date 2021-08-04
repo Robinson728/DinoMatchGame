@@ -44,12 +44,12 @@
         {
             var animal = AnimalesMesclado[NumeroAnimales];
             var uniqueDescription = $"Button #{NumeroAnimales}";
-            <div class="col-3">
-                <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
-                        type="button" class="btn btn-outline-dark">
-                    <h1>@animal</h1>
-                </button>
-            </div>
+        <div class="col-3">
+            <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
+                    type="button" class="btn btn-outline-dark">
+                <h1>@animal</h1>
+            </button>
+        </div>
         }
     </div>
 </div>
@@ -88,7 +88,7 @@
     List<string> AnimalesMesclado = new List<string>();
     int ParesEncontrados = 0;
     Timer timer;
-    int tenthsOfSecondsElapsed = 80;
+    int tenthsOfSecondsElapsed = 0;
     string TiempoPantalla;
     string UltimoAnimalEncontrado = string.Empty;
     string UltimaDescripcion = string.Empty;
@@ -111,7 +111,7 @@
             .OrderBy(item => random.Next())
             .ToList();
         ParesEncontrados = 0;
-        tenthsOfSecondsElapsed = 80;
+        tenthsOfSecondsElapsed = 0;
     }
 
     private void Reiniciar()
@@ -120,7 +120,7 @@
         AnimalesMesclado = animalEmoji
             .OrderBy(item => random.Next())
             .ToList();
-        tenthsOfSecondsElapsed = 80;
+        tenthsOfSecondsElapsed = 0;
     }
 
     private void ButtonClick(string animal, string animalDescription)
@@ -179,6 +179,7 @@
             TiempoPantalla = (tenthsOfSecondsElapsed / 10F)
                 .ToString("0.0s");
             StateHasChanged();
+            timer.Start();
         });
     }
 
@@ -201,11 +202,11 @@
 
         if (paso)
         {
-            @*Condicion 1: no se debe mostrar nada si guardo correctamente*@
+    @*Condicion 1: no se debe mostrar nada si guardo correctamente*@
         }
         else
         {
-            @*Condicion 2: en caso de error se debe mostrar que ocurrio un error*@
+    @*Condicion 2: en caso de error se debe mostrar que ocurrio un error*@
         }
     }
 }
