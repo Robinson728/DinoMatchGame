@@ -15,7 +15,7 @@
     }
 
 
-    button {
+    #miboton {
         width: 100px;
         height: 100px;
         font-size: 50px;
@@ -28,13 +28,13 @@
 
 
 <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" @onclick="ToggleNavMenu" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Claro que si
+    <button class="btn btn-secondary dropdown-toggle" @onclick="ToggleNavMenu" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false" style="background: #7952B3">
+        Seleccionar Modo
     </button>
     <div class="dropdown-menu @NavMenuCssClass" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
+        <a class="dropdown-item" href="EntrenamientoA">Facil</a>
+        <a class="dropdown-item" href="NormalEntrenamiento">Normal</a>
+        <a class="dropdown-item" href="DificilEntrenamiento">Dificil</a>
     </div>
 </div>
 
