@@ -26,6 +26,18 @@
     }
 </style>
 
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" @onclick="ToggleNavMenu" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Claro que si
+    </button>
+    <div class="dropdown-menu @NavMenuCssClass" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+</div>
+
 <div class="container mt-4">
     <div class="row">
         @for (var NumeroAnimales = 0; NumeroAnimales < AnimalesMesclado.Count; NumeroAnimales++)
@@ -146,5 +158,13 @@
                 .ToString("0.0s");
             StateHasChanged();
         });
+    }
+    private bool collapseNavMenu = false;
+
+    private string NavMenuCssClass => collapseNavMenu ? "show" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
     }
 }
