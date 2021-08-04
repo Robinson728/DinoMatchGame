@@ -1,15 +1,13 @@
-﻿@page "/NormalR"
+﻿@page "/DificilR"
 @using System.Timers
 
 <style>
     .container {
-        margin-left: 40px;
-        width: 450px;
-        float: left;
+        width: 900px;
     }
 
     jonathan {
-        margin-right: unset;
+        margin: auto;
         width: 40px;
         height: 50px;
     }
@@ -25,13 +23,13 @@
     }
 </style>
 
-<div class="container mt-4">
+<div class="container">
     <div class="row">
         @for (var animalNumber = 0; animalNumber < AnimalesMesclado.Count; animalNumber++)
         {
             var animal = AnimalesMesclado[animalNumber];
             var uniqueDescription = $"Button #{animalNumber}";
-            <div class="col-2">
+            <div class="col-1">
                 <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
                         type="button" class="btn btn-outline-dark">
                     <h1>@animal</h1>
@@ -43,7 +41,7 @@
 
 <div class="jonathan mt-5">
 
-    <div class="container bg-transparent" style="height:400px">
+    <div class="container-fluid bg-transparent" style="height:400px">
         <div class="border border-dark">
             <div class="text-center">
                 <h3 class="text-light">CUADRADO DE PUNTAJE</h3>
@@ -51,7 +49,7 @@
         </div>
 
         <div class="border border-dark">
-            <h4 class="text-light">Pares: @ParesEncontados</h4>
+            <h4 class="text-light">Pares: @ParesEncontrados</h4>
             <h4 class="text-light">Tiempo: @TiempoPantalla</h4>
         </div>
 
@@ -76,15 +74,46 @@
         "👻","👻",
         "🤖","🤖",
         "🧙🏽‍♂️","🧙🏽‍♂️",
-        "🧛🏼‍♀️","🧛🏼‍♀️",
+        "🧛🏽‍♀️","🧛🏽‍♀️",
         "👩🏽‍🔬","👩🏽‍🔬",
         "👩🏽‍🚀","👩🏽‍🚀",
+        "🦅","🦅",
+        "🐎","🐎",
+        "🐣","🐣",
+        "🧊","🧊",
+        "🦪","🦪",
+        "🎮","🎮",
+        "🏅","🏅",
+        "🏆","🏆",
+        "🥇","🥇",
+        "🥈","🥈",
+        "🥉","🥉",
+        "🐉","🐉",
+        "🧸","🧸",
+        "🐍","🐍",
+        "🍺","🍺",
+        "🦖","🦖",
+        "🦌","🦌",
+        "🧠","🧠",
+        "🐬","🐬",
+        "🐊","🐊",
+        "🦍","🦍",
+        "🦦","🦦",
+        "🐆","🐆",
+        "🍩","🍩",
+        "🍥","🍥",
+        "🌎","🌎",
+        "🛸","🛸",
+        "💄","💄",
+        "🦴","🦴",
+        "🦠","🦠",
+
     };
 
     List<string> AnimalesMesclado = new List<string>();
-    int ParesEncontados = 0;
+    int ParesEncontrados = 0;
     Timer timer;
-    int tenthsOfSecondsElapsed = 400;
+    int tenthsOfSecondsElapsed = 900;
     string TiempoPantalla;
     string UltimoAnimalEncontrado = string.Empty;
     string UltimaDescripcion = string.Empty;
@@ -104,8 +133,8 @@
         AnimalesMesclado = animalEmoji
             .OrderBy(item => random.Next())
             .ToList();
-        ParesEncontados = 0;
-        tenthsOfSecondsElapsed = 400;
+        ParesEncontrados = 0;
+        tenthsOfSecondsElapsed = 900;
     }
 
     private void Reiniciar()
@@ -114,8 +143,8 @@
         AnimalesMesclado = animalEmoji
             .OrderBy(item => random.Next())
             .ToList();
-        ParesEncontados = 0;
-        tenthsOfSecondsElapsed = 400;
+        ParesEncontrados = 0;
+        tenthsOfSecondsElapsed = 900;
     }
 
     private void ButtonClick(string animal, string animalDescription)
@@ -125,9 +154,9 @@
             // First selection of the pair. Remember it.
             UltimoAnimalEncontrado = animal;
             UltimaDescripcion = animalDescription;
-            if (ParesEncontados == 18)
+            if (ParesEncontrados == 48)
             {
-                ParesEncontados = 0;
+                ParesEncontrados = 0;
             }
 
             timer.Start();
@@ -142,15 +171,15 @@
                 .Select(a => a.Replace(animal, string.Empty))
                 .ToList();
 
-            ParesEncontados++;
-            if (ParesEncontados == 18)
+            ParesEncontrados++;
+            if (ParesEncontrados == 48)
             {
                 timer.Stop();
                 TiempoPantalla += " ¿Jugar de nuevo?";
 
                 Reiniciar();
             }
-            
+
         }
         else
         {
@@ -173,13 +202,6 @@
                 Reiniciar();
             }
 
-            if (ParesEncontados > 0 && ParesEncontados < 17 && tenthsOfSecondsElapsed <= 0)
-            {
-                timer.Stop();
-                TiempoPantalla += " ¿cuero?";
-
-                Reiniciar();
-            }
 
             TiempoPantalla = (tenthsOfSecondsElapsed / 10F)
                 .ToString("0.0s");
