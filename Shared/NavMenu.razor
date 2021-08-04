@@ -36,62 +36,66 @@
 
             }
         </li>
+        
+        <AuthorizeView>
+            <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" @onclick="Funcion2">
+                        <span class="oi oi-caret-bottom" aria-hidden="true"></span> Arcade
+                    </NavLink>
 
+                    @if (Dificultad)
+                    {
+                        <ul class="nav flex-column">
+                            <li class="nav-item px-2">
+                                <NavLink class="nav-link" href="Facil">
+                                    <span class="oi oi-play-circle" aria-hidden="true"></span> Facil
+                                </NavLink>
+                            </li>
+                            <li class="nav-item px-2">
+                                <NavLink class="nav-link" href="Normal">
+                                    <span class="oi oi-play-circle" aria-hidden="true"></span> Normal
+                                </NavLink>
+                            </li>
+                            <li class="nav-item px-2">
+                                <NavLink class="nav-link" href="Dificil">
+                                    <span class="oi oi-play-circle" aria-hidden="true"></span> Dificil
+                                </NavLink>
+                            </li>
+                        </ul>
 
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" @onclick="Funcion2">
-                <span class="oi oi-caret-bottom" aria-hidden="true"></span> Arcade
-            </NavLink>
+                    }
+                </li>
 
-            @if (Dificultad)
-            {
-                <ul class="nav flex-column">
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="Facil">
-                            <span class="oi oi-play-circle" aria-hidden="true"></span> Facil
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="Normal">
-                            <span class="oi oi-play-circle" aria-hidden="true"></span> Normal
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="Dificil">
-                            <span class="oi oi-play-circle" aria-hidden="true"></span> Dificil
-                        </NavLink>
-                    </li>
-                </ul>
+                <li class=" nav-item px-3">
+                    <NavLink class="nav-link" @onclick="Funcion3">
+                        <span class="oi oi-caret-bottom" aria-hidden="true"></span>Contra Reloj
+                    </NavLink>
 
-            }
-        </li>
-
-        <li class=" nav-item px-3">
-            <NavLink class="nav-link" @onclick="Funcion3">
-                <span class="oi oi-caret-bottom" aria-hidden="true"></span>Contra Reloj
-            </NavLink>
-
-            @if (ContraTime)
-            {
-                <ul class=" nav flex-column">
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="FacilR">
-                            <span class="oi oi-play-circle" aria-hidden="true"></span> Facil
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="NormalR">
-                            <span class="oi oi-play-circle" aria-hidden="true"></span> Normla
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="DificilR">
-                            <span class="oi oi-play-circle" aria-hidden="true"></span> Dificil
-                        </NavLink>
-                    </li>
-                </ul>
-            }
-        </li>
+                    @if (ContraTime)
+                    {
+                        <ul class=" nav flex-column">
+                            <li class="nav-item px-2">
+                                <NavLink class="nav-link" href="FacilR">
+                                    <span class="oi oi-play-circle" aria-hidden="true"></span> Facil
+                                </NavLink>
+                            </li>
+                            <li class="nav-item px-2">
+                                <NavLink class="nav-link" href="NormalR">
+                                    <span class="oi oi-play-circle" aria-hidden="true"></span> Normla
+                                </NavLink>
+                            </li>
+                            <li class="nav-item px-2">
+                                <NavLink class="nav-link" href="DificilR">
+                                    <span class="oi oi-play-circle" aria-hidden="true"></span> Dificil
+                                </NavLink>
+                            </li>
+                        </ul>
+                    }
+                </li>
+            </Authorized>
+        </AuthorizeView>
+        
 
     </ul>
 </div>
