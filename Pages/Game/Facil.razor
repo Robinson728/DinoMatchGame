@@ -1,5 +1,6 @@
 ﻿@page "/Facil"
 @using System.Timers
+@using DinoMatchGame.BLL
 
 <style>
     .container {
@@ -14,21 +15,37 @@
         height: 50px;
     }
 
-    button {
+    #miboton {
         width: 100px;
         height: 100px;
         font-size: 40px;
     }
+
+        #miboton:focus {
+            background: #7952B3
+        }
 </style>
+
+@*Con este codigo capturamos el nombre del usuario.*@
+
+<AuthorizeView>
+    <Authorized>
+        @if (@context.User.Identity.Name != string.Empty)
+        {
+            RecibirNombreUsuario(Convert.ToString(context.User.Identity.Name));
+        }
+    </Authorized>
+</AuthorizeView>
 
 <div class="container mt-4">
     <div class="row">
+
         @for (var NumeroAnimales = 0; NumeroAnimales < AnimalesMesclado.Count; NumeroAnimales++)
         {
             var animal = AnimalesMesclado[NumeroAnimales];
             var uniqueDescription = $"Button #{NumeroAnimales}";
             <div class="col-3">
-                <button @onclick="@(() => ButtonClick(animal, uniqueDescription))"
+                <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
                         type="button" class="btn btn-outline-dark">
                     <h1>@animal</h1>
                 </button>
@@ -56,7 +73,7 @@
 
 @code {
 
-        List<string> animalEmoji = new List<string>()
+    List<string> animalEmoji = new List<string>()
 {
     "🐶","🐶",
     "🐺","🐺",
@@ -68,13 +85,16 @@
     "🐹","🐹",
     };
 
-        List<string> AnimalesMesclado = new List<string>();
-        int ParesEncontrados = 0;
-        Timer timer;
-        int tenthsOfSecondsElapsed = 80;
-        string TiempoPantalla;
-        string UltimoAnimalEncontrado = string.Empty;
-        string UltimaDescripcion = string.Empty;
+    List<string> AnimalesMesclado = new List<string>();
+    int ParesEncontrados = 0;
+    Timer timer;
+    int tenthsOfSecondsElapsed = 80;
+    string TiempoPantalla;
+    string UltimoAnimalEncontrado = string.Empty;
+    string UltimaDescripcion = string.Empty;
+
+    MatchDino jugada = new MatchDino();
+    public string Jugador = string.Empty;
 
     protected override void OnInitialized()
     {
@@ -105,6 +125,7 @@
 
     private void ButtonClick(string animal, string animalDescription)
     {
+
         if (UltimoAnimalEncontrado == string.Empty)
         {
             // First selection of the pair. Remember it.
@@ -134,25 +155,57 @@
                 timer.Stop();
                 TiempoPantalla += " ¿Nueva Partida?";
 
+
+
+                RegistrarJugada();
+
+
                 Reiniciar();
             }
-            }
-            else
-            {
-                // User selected a pair that don't match.
-                // Reset selection.
-                UltimoAnimalEncontrado = string.Empty;
-            }
         }
-
-        private void Timer_Tick(Object source, ElapsedEventArgs e)
+        else
         {
-            InvokeAsync(() =>
-            {
-                tenthsOfSecondsElapsed++;
-                TiempoPantalla = (tenthsOfSecondsElapsed / 10F)
-                    .ToString("0.0s");
-                StateHasChanged();
-            });
+            // User selected a pair that don't match.
+            // Reset selection.
+            UltimoAnimalEncontrado = string.Empty;
         }
     }
+
+    private void Timer_Tick(Object source, ElapsedEventArgs e)
+    {
+        InvokeAsync(() =>
+        {
+            tenthsOfSecondsElapsed++;
+            TiempoPantalla = (tenthsOfSecondsElapsed / 10F)
+                .ToString("0.0s");
+            StateHasChanged();
+        });
+    }
+
+    private void RecibirNombreUsuario(string user)
+    {
+        Jugador = user;
+    }
+
+    private void RegistrarJugada()
+    {
+        bool paso = false;
+
+        jugada.Id = 0;
+        jugada.Jugador = Jugador;
+        jugada.ModoDeJuego = "Arcade";
+        jugada.Dificultad = "Facil";
+        jugada.TiempoJugada = Convert.ToSingle(this.TiempoPantalla.Replace("s", ""));
+
+        //paso = MatchDinoBLL.Guardar(jugada);
+
+        if (paso)
+        {
+            @*Condicion 1: no se debe mostrar nada si guardo correctamente*@
+        }
+        else
+        {
+            @*Condicion 2: en caso de error se debe mostrar que ocurrio un error*@
+        }
+    }
+}

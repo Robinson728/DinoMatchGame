@@ -10,6 +10,7 @@ namespace DinoMatchGame.DAL
     public class Contexto : DbContext
     {
         public DbSet<Usuarios> usuarios { get; set; }
+        public DbSet<MatchDino> MatchDino { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
