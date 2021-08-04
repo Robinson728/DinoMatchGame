@@ -3,18 +3,28 @@
 @inject NavigationManager Nav
 @inject IJSRuntime Confirmacion
 
+
+<style>
+    #Texto {
+        -webkit-text-stroke: 2px black;
+        color: transparent;
+    }
+</style>
+
 <div class=" container">
-        <div class=" text-center">
+    <div class=" text-center">
 
-            <p style="font-family: Times New Roman">
-                ⚠️Bienvenido a DinoGame, es hora de divertirse con nuestros diferentes modos de juego🎉
-            </p>
-                Antes de Iniciar, te invitamos a <a href="/" class="ml-2" @onclick="Login">Loguearte </a> o <a href="/RUsuarios" class="ml-2" @onclick="Registrar"> Registrarte</a>
-
-        </div>
-
-
+        <p  style="font-size: 50px; color:white; position: absolute; bottom:35%; width: 75%; text-align: center">
+            🎉Bienvenido a DinoGame, es hora de divertirse con nuestros diferentes modos de juego🎉
+        </p>
     </div>
+    <div style="background:transparent">
+        <h5 style="color: white; position: absolute; bottom: 20px; width: 75%; text-align: center;">
+            ⚠️Para descubrir mas modos de juego logueate para que tengas acceso a ellos!⚠️
+        </h5>
+    </div>
+    
+</div>
 
 
 
