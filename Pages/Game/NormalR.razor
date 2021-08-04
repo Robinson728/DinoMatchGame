@@ -143,14 +143,15 @@
                 .ToList();
 
             ParesEncontados++;
-            if (ParesEncontados == 18)
+            if (ParesEncontados == 18 && ParesEncontados != 0)
             {
                 timer.Stop();
                 TiempoPantalla += " ¿Jugar de nuevo?";
 
                 Reiniciar();
             }
-            
+
+
         }
         else
         {
@@ -169,14 +170,6 @@
             {
                 timer.Stop();
                 TiempoPantalla += " ¿Jugar de nuevo?";
-
-                Reiniciar();
-            }
-
-            if (ParesEncontados > 0 && ParesEncontados < 17 && tenthsOfSecondsElapsed <= 0)
-            {
-                timer.Stop();
-                TiempoPantalla += " ¿cuero?";
 
                 Reiniciar();
             }
