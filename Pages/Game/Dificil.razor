@@ -1,5 +1,6 @@
 ﻿@page "/Dificil"
 @using System.Timers
+@inject IToastService toast
 
 <style>
     .container {
@@ -131,6 +132,8 @@
     MatchDino jugada = new MatchDino();
     public string Jugador = string.Empty;
 
+    string time;
+
 
     protected override void OnInitialized()
     {
@@ -189,6 +192,7 @@
             if (ParesEncontrados == 48)
             {
                 timer.Stop();
+                time = TiempoPantalla;
                 TiempoPantalla += " ¿Jugar de nuevo?";
 
                 Reiniciar();
@@ -228,17 +232,13 @@
         jugada.Jugador = Jugador;
         jugada.ModoDeJuego = "Arcade";
         jugada.Dificultad = "Difícil";
-        jugada.TiempoJugada = Convert.ToSingle(this.TiempoPantalla.Replace("s", ""));
+        jugada.TiempoJugada = Convert.ToDouble(this.time.Replace("s", ""));
 
-        //paso = MatchDinoBLL.Guardar(jugada);
+        paso = MatchDinoBLL.Guardar(jugada);
 
-        if (paso)
+        if (!paso)
         {
-            @*Condicion 1: no se debe mostrar nada si guardo correctamente*@
-        }
-        else
-        {
-            @*Condicion 2: en caso de error se debe mostrar que ocurrio un error*@
+            toast.ShowSuccess("Ha ocurrido un error al guardar los datos.");
         }
     }
 
