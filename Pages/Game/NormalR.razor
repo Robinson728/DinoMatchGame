@@ -162,8 +162,12 @@
             if (ParesEncontados == 18 && ParesEncontados != 0)
             {
                 timer.Stop();
-                time = TiempoPantalla;
+                time = (40 - Convert.ToDouble(this.TiempoPantalla.Replace("s", ""))).ToString();
+                TiempoPantalla = time;
+                TiempoPantalla += "s";
                 TiempoPantalla += " ¿Nueva Partida?";
+
+                RegistrarJugada();
 
                 Reiniciar();
             }
@@ -210,7 +214,7 @@
         jugada.Jugador = Jugador;
         jugada.ModoDeJuego = "Contra Reloj";
         jugada.Dificultad = "Normal";
-        jugada.TiempoJugada = 40 - Convert.ToDouble(this.time.Replace("s", ""));
+        jugada.TiempoJugada = Math.Round(Convert.ToSingle(this.time), 2);
 
         paso = MatchDinoBLL.Guardar(jugada);
 

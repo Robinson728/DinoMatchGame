@@ -199,7 +199,7 @@
         jugada.Jugador = Jugador;
         jugada.ModoDeJuego = "Arcade";
         jugada.Dificultad = "Fácil";
-        jugada.TiempoJugada = Convert.ToSingle(this.time.Replace("s", ""));
+        jugada.TiempoJugada = Math.Round(Convert.ToSingle(this.time.Replace("s", "")),2);
 
         paso = MatchDinoBLL.Guardar(jugada);
 
