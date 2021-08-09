@@ -4,7 +4,7 @@
 @inject IToastService toast
 
 <style>
-    .container {
+    #Cuadro {
         margin-left: 80px;
         width: 400px;
         float: left;
@@ -45,20 +45,38 @@
         #Cuadro {
             display: none
         }
+
+        #tablero {
+            float: left
+        }
+
+        #boton2 {
+            display: normal
+        }
     </style>
 
+}
+else
+{
+    <style>
+        #tablero {
+            float: right
+        }
+
+        #boton2 {
+            display: none
+        }
+    </style>
 }
 
 
 
-<div id="Cuadro" class="container mt-3">
-
+<div id="Cuadro" class="container mt-3" style="float:left">
     <div class="row">
-
-        @for (var NumeroAnimales = 0; NumeroAnimales < AnimalesMesclado.Count; NumeroAnimales++)
+        @for (var animalNumber = 0; animalNumber < AnimalesMesclado.Count; animalNumber++)
         {
-            var animal = AnimalesMesclado[NumeroAnimales];
-            var uniqueDescription = $"Button #{NumeroAnimales}";
+            var animal = AnimalesMesclado[animalNumber];
+            var uniqueDescription = $"Button #{animalNumber}";
             <div class="col-3">
                 <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
                         type="button" class="btn btn-outline-dark">
@@ -70,7 +88,8 @@
 </div>
 
 
-<div class="container">
+
+<div id="tablero">
     <div class="card text-white bg-transparent" style="max-width: 18rem; background: #7952B3">
         <div class="card-header text-center" style="background: #511E78 ; font-size: 22px">Cuadro de Puntuación</div>
         <div class="card-body" style="background: #8B2F97 ">
@@ -78,7 +97,7 @@
             <h5 class="card-title">Tiempo: @TiempoPantalla</h5>
         </div>
         <div class="card-footer text-center" style="background: #511E78">
-            <button class="btn btn-outline-success" @onclick="()=> prueba = !prueba">Jugar</button>
+            <button id="boton2" class="btn btn-outline-success" @onclick="()=> prueba = !prueba">Jugar</button>
         </div>
     </div>
 </div>
@@ -127,7 +146,7 @@
     public string Jugador = string.Empty;
     string time;
 
-    bool prueba = true;
+    bool prueba = false;
 
     protected override void OnInitialized()
     {
@@ -242,30 +261,30 @@
 }
 
 @*<div class="container" style="float:left">
-    <div class="row" id="tablero">
-        @for (var animalNumber = 0; animalNumber < shuffledAnimals.Count; animalNumber++)
-        {
-            var animal = shuffledAnimals[animalNumber];
-            var uniqueDescription = $"Button #{animalNumber}";
-            <div class="col-1">
-                <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
-                        type="button" class="btn btn-outline-dark">
-                    <h1>@animal</h1>
-                </button>
-            </div>
-        }
+        <div class="row" id="tablero">
+            @for (var animalNumber = 0; animalNumber < shuffledAnimals.Count; animalNumber++)
+            {
+                var animal = shuffledAnimals[animalNumber];
+                var uniqueDescription = $"Button #{animalNumber}";
+                <div class="col-1">
+                    <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
+                            type="button" class="btn btn-outline-dark">
+                        <h1>@animal</h1>
+                    </button>
+                </div>
+            }
+        </div>
     </div>
-</div>
 
-<div style="float:right">
-    <div class="card text-white bg-transparent" style="max-width: 18rem; background: #7952B3">
-        <div class="card-header text-center" style="background: #511E78 ; font-size: 22px">Cuadro de Puntuación</div>
-        <div class="card-body" style="background: #8B2F97 ">
-            <h5 class="card-title">Pares encontrados: @ParesEncontrados</h5>
-            <h5 class="card-title">Tiempo: @TiempoPantalla</h5>
+    <div style="float:right">
+        <div class="card text-white bg-transparent" style="max-width: 18rem; background: #7952B3">
+            <div class="card-header text-center" style="background: #511E78 ; font-size: 22px">Cuadro de Puntuación</div>
+            <div class="card-body" style="background: #8B2F97 ">
+                <h5 class="card-title">Pares encontrados: @ParesEncontrados</h5>
+                <h5 class="card-title">Tiempo: @TiempoPantalla</h5>
+            </div>
+            <div class="card-footer text-center" style="background: #511E78">
+                <button class="btn btn-outline-success" @onclick="()=> prueba = !prueba">Jugar</button>
+            </div>
         </div>
-        <div class="card-footer text-center" style="background: #511E78">
-            <button class="btn btn-outline-success" @onclick="()=> prueba = !prueba">Jugar</button>
-        </div>
-    </div>
-</div>*@
+    </div>*@
