@@ -13,13 +13,13 @@
         height: 50px;
     }
 
-    button {
+    #miboton2 {
         width: 70px;
         height: 70px;
         font-size: 50px;
     }
 
-    #miboton:focus {
+    #miboton2:focus {
         background: #7952B3
     }
 </style>
@@ -33,15 +33,44 @@
     </Authorized>
 </AuthorizeView>
 
+@if (prueba)
+{
+    Reiniciar();
+    <style>
+        #Cuadro {
+            display: none
+        }
 
-<div class="container">
+        #tablero {
+            float: left
+        }
+
+        #boton2 {
+            display:normal
+        }
+    </style>
+
+}
+else
+{
+    <style>
+        #tablero {
+            float: right
+        }
+        #boton2 {
+            display: none
+        }
+    </style>
+}
+
+<div id="Cuadro" class="container mt-3" style="float:left">
     <div class="row">
         @for (var animalNumber = 0; animalNumber < shuffledAnimals.Count; animalNumber++)
         {
             var animal = shuffledAnimals[animalNumber];
             var uniqueDescription = $"Button #{animalNumber}";
             <div class="col-1">
-                <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
+                <button id="miboton2" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
                         type="button" class="btn btn-outline-dark">
                     <h1>@animal</h1>
                 </button>
@@ -50,20 +79,18 @@
     </div>
 </div>
 
-<div class="jonathan mt-5">
 
-    <div class="container-fluid bg-transparent" style="height:400px">
-        <div class="border border-dark">
-            <div class="text-center">
-                <h3 class="text-light">CUADRADO DE PUNTAJE</h3>
-            </div>
+
+<div id="tablero">
+    <div class="card text-white bg-transparent" style="max-width: 18rem; background: #7952B3">
+        <div class="card-header text-center" style="background: #511E78 ; font-size: 22px">Cuadro de Puntuación</div>
+        <div class="card-body" style="background: #8B2F97 ">
+            <h5 class="card-title">Pares encontrados: @ParesEncontrados</h5>
+            <h5 class="card-title">Tiempo: @TiempoPantalla</h5>
         </div>
-
-        <div class="border border-dark">
-            <h4 class="text-light">Pares: @ParesEncontrados</h4>
-            <h4 class="text-light">Tiempo: @TiempoPantalla</h4>
+        <div class="card-footer text-center" style="background: #511E78">
+            <button id="boton2" class="btn btn-outline-success" @onclick="()=> prueba = !prueba">Jugar</button>
         </div>
-
     </div>
 </div>
 
@@ -134,6 +161,7 @@
 
     string time;
 
+    bool prueba = false;
 
     protected override void OnInitialized()
     {
@@ -195,6 +223,9 @@
                 time = TiempoPantalla;
                 TiempoPantalla += " ¿Jugar de nuevo?";
 
+                RegistrarJugada();
+                prueba = !prueba;
+
                 Reiniciar();
             }
         }
@@ -232,7 +263,7 @@
         jugada.Jugador = Jugador;
         jugada.ModoDeJuego = "Arcade";
         jugada.Dificultad = "Difícil";
-        jugada.TiempoJugada = Math.Round(Convert.ToDouble(this.time.Replace("s", "")),2);
+        jugada.TiempoJugada = Math.Round(Convert.ToDouble(this.time.Replace("s", "")), 2);
 
         paso = MatchDinoBLL.Guardar(jugada);
 

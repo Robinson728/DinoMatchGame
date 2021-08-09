@@ -22,10 +22,9 @@
         font-size: 40px;
     }
 
-    #miboton:focus {
-        background: #7952B3
-    }
-    
+        #miboton:focus {
+            background: #7952B3
+        }
 </style>
 
 @*Con este codigo capturamos el nombre del usuario.*@
@@ -49,6 +48,7 @@
     </style>
 
 }
+
 
 
 <div id="Cuadro" class="container mt-3">
@@ -240,3 +240,32 @@
         }
     }
 }
+
+@*<div class="container" style="float:left">
+    <div class="row" id="tablero">
+        @for (var animalNumber = 0; animalNumber < shuffledAnimals.Count; animalNumber++)
+        {
+            var animal = shuffledAnimals[animalNumber];
+            var uniqueDescription = $"Button #{animalNumber}";
+            <div class="col-1">
+                <button id="miboton" @onclick="@(() => ButtonClick(animal, uniqueDescription))"
+                        type="button" class="btn btn-outline-dark">
+                    <h1>@animal</h1>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<div style="float:right">
+    <div class="card text-white bg-transparent" style="max-width: 18rem; background: #7952B3">
+        <div class="card-header text-center" style="background: #511E78 ; font-size: 22px">Cuadro de Puntuación</div>
+        <div class="card-body" style="background: #8B2F97 ">
+            <h5 class="card-title">Pares encontrados: @ParesEncontrados</h5>
+            <h5 class="card-title">Tiempo: @TiempoPantalla</h5>
+        </div>
+        <div class="card-footer text-center" style="background: #511E78">
+            <button class="btn btn-outline-success" @onclick="()=> prueba = !prueba">Jugar</button>
+        </div>
+    </div>
+</div>*@
